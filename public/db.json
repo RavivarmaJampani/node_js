@@ -1,40 +1,39 @@
-{"schedule": [{
-  "match no":1,
+{"books": [{
+  "match_no":1,
   "map": "Erangle",
   "date": "05-01-2023",
   "time": ["10:00","10:30"],
-  "entrance fee":100
+  "entrance_fee":100
 
 },
 {
-  "match no":2,
+  "match_no":2,
   "map": "Shanok",
   "date": "05-02-2023",
   "time": ["11:00","11:30"],
-  "entrance fee":110
+  "entrance_fee":110
 
 },
 {
-  "match no":3,
+  "match_no":3,
   "map": "Miramer",
   "date": "05-03-2023",
   "time": ["11:30","12:00"],
-  "entrance fee":120
+  "entrance_fee":120
 
 },
 {
-  "match no":4,
+  "match_no":4,
   "map": "Livik",
   "date": "05-04-2023",
   "time": ["12:00","12:30"],
-  "entrance fee":130
+  "entrance_fee":130
 
 },
 {
-  "match no":5,
+  "match_no":5,
   "map": "Vikendi",
   "date": "05-05-2023",
   "time": ["12:30","1:00"],
-  "entrance fee":140
-
+  "entrance_fee":140
 }]}
