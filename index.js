@@ -1,59 +1,59 @@
-const http =require('http');
+const http= require('http');
+const fs= require('fs');
 const path = require('path');
-const fs = require('fs');
+const {MongoClient} = require('mongodb');
+const uri ="mongodb+srv://jrvarma3210:Jrvarma3210@cluster0.v9gvzk0.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
-const server = http.createServer((req, res)=>{
+const server   =http.createServer(async(req,res) => {
+    const headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+    
+      
+      };
 
-    console.log(req.url);
-    // / or /api /about.html
-     
-    if( req.url ==='/'){
-     
-        fs.readFile(path.join(__dirname,'public','index.html'),
-        (err, content)=>{
-
-            if (err) throw err;
-            res.writeHead(200,{ 'Content-type': 'text/html'});
-            res.end(content);
-
-        });
-
-
+const connectDB=async()=>{
+    try{
+        await client.connect();
+        console.log("Mongo DB is connected")
+    
     }
-    else if(req.url ==='/about.html'){
-
-       
-        fs.readFile(path.join(__dirname,'public','about.html'),
-        (err, content)=>{
-            if(err ) throw err;
-            res.writeHead(200, { 'Content-type': 'text/html'})
-            res.end(content)
-        });
-
-
-
+    catch(e){
+        console.log(e)
     }
-    else if(req.url ==='/api'){
+}
+connectDB();
 
-        fs.readFile(path.join(__dirname,'public','db.json'), 'utf-8',
-        (err, content)=>{
+console.log(req.url)
+if(req.url === '/'){
+    fs.readFile( path.join(__dirname,'public','index.html'),(err,data)=>{
 
-            if(err ) throw err ;
-            res.writeHead(200, { 'Content-type': 'application/json'})  
-            res.end(content);
-        });
-
-
+    if (err) throw err;
+    res.writeHead(200,{ 'Content-Type' : 'text/html'});
+    res.end(data);
     }
-    else{
-        res.writeHead(404, { 'Content-type': 'text/html'})  
-        res.end("<h1> 404 Nothing is Here </h1>")
-    }
+ )
+ 
+}
+else if(req.url=='/api')
+{
 
-  
+    const cursor = client.db("workdb").collection("workcollections").find({});
+    const results = await cursor.toArray();
+    //console.log(results);
+    const js= (JSON.stringify(results));
+    res.writeHead(200,headers)
+    console.log(js);
+    res.end(js);
 
-   
+}
+else{
+
+    res.end("Eror 404")
+}
 
 });
 
-server.listen(5959, ()=> console.log(" great our server is runnning"));
+const PORT = process.env.PORT || 5959;
+server.listen(PORT,() => console.log(`Server is running at port: ${PORT}`));
